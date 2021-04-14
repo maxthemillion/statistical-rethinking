@@ -13,4 +13,4 @@ Focus on one or two types of situations that may arise often in business and whe
 * How long will it take until some event occurs? -> Survival analysis
 
 
-Modelling probabilities could be one of the most common but also most useful cases.
+Modelling probabilities could be one of the most common but also most useful cases for risk analysis.
