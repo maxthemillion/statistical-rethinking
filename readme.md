@@ -10,23 +10,28 @@ I am currently working through the book ["Statistical Rethinking" by Richard McE
 
 > ssh -i ~/.ssh/mcmc.pem azureuser@<publicip>
 
-# setup rstan env on azure vm
+# setup rstan env on linux
 
-Basically, all you should need is
+
+Configuring your toolchain like so:
+
+````
+dotR <- file.path(Sys.getenv("HOME"), ".R")
+if (!file.exists(dotR)) dir.create(dotR)
+M <- file.path(dotR, "Makevars")
+if (!file.exists(M)) file.create(M)
+cat("\nCXX14FLAGS=-O3 -march=native -mtune=native -fPIC",
+    "CXX14=g++-10", # or clang++ but you may need a version postfix
+    file = M, sep = "\n", append = TRUE)
+````
+
+And then this:
 > Sys.setenv(DOWNLOAD_STATIC_LIBV8 = 1) 
 > install.packages("rstan", repos = "https://cloud.r-project.org/", dependencies = TRUE)
 
-However, installing V8 requires some system resources like curl. So you can fix those like this: 
 
-[Installing V8 system dependencies](https://stackoverflow.com/questions/62302713/not-able-to-install-v8-package-on-ubuntu)
+However, installing rstan requires some packages with system resources like curl. Refer to the docker image for details on system requirements and configurations.
 
-Then install V8 like this:
-[Solve (some) issue with v8 when installing rstan on linux](https://github.com/stan-dev/rstan/issues/863)
-
-Then you can run install.packages("rstan") like so: 
-[installing RStan](https://github.com/stan-dev/rstan/wiki/RStan-Getting-Started)
-
-[configure toolchain](https://github.com/stan-dev/rstan/wiki/Configuring-C-Toolchain-for-Linux)
 
 
 
