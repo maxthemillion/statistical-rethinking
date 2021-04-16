@@ -11,13 +11,8 @@ RUN apt-get update && apt install -y \
 
 ARG DOWNLOAD_STATIC_LIBV8=1
 
-RUN R -e 'dotR <- file.path(Sys.getenv("HOME"), ".R") \
-    if (!file.exists(dotR)) dir.create(dotR) \
-    M <- file.path(dotR, "Makevars") \
-    if (!file.exists(M)) file.create(M) \
-    cat("\nCXX14FLAGS=-O3 -march=native -mtune=native -fPIC",\
-        "CXX14=g++-10", \
-        file = M, sep = "\n", append = TRUE)'
+ADD config /src/config
+RUN Rscript /src/config/config.R
 
 RUN R -e "install.packages('rstan', repos = 'https://cloud.r-project.org/', dependencies=TRUE)"
 
