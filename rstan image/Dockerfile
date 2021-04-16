@@ -1,8 +1,12 @@
+FROM r-base 
+
 LABEL version="0.1"
 LABEL description="This image encapsulates an environment to run the rethinking package for \
     the statistics course statistical rethinking on a simple linux image"
 
-FROM r-base 
+ENTRYPOINT []
+CMD []
+
 RUN apt-get update && apt install -y \
     libcurl4-openssl-dev \
     libssl-dev \

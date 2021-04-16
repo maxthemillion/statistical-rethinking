@@ -2,8 +2,9 @@ FROM maxthemillion/rstan:latest
 
 ENV PATH="/root/miniconda3/bin:${PATH}"
 ARG PATH="/root/miniconda3/bin:${PATH}"
-RUN apt-get update
+EXPOSE 9999
 
+RUN apt-get update
 RUN apt-get install -y wget && rm -rf /var/lib/apt/lists/*
 
 RUN wget \
@@ -18,3 +19,6 @@ RUN conda install -c conda-forge jupyterlab
 
 RUN R -e "install.packages('IRkernel')"
 RUN R -e "IRkernel::installspec()"
+
+WORKDIR /src/notebooks
+CMD jupyter lab --ip 0.0.0.0 --port 9999 --allow-root --no-browser --NotebookApp.token='' --NotebookApp.password=''
